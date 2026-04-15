@@ -9,22 +9,74 @@ Full-stack E-commerce application with Django (Backend), Next.js (Frontend), Pos
 - `nginx/`: Nginx configuration
 - `docker-compose.yml`: Docker orchestration
 
-## Requirements
+## Getting Started
 
+You can run the project either using Docker (recommended for a quick full-stack setup) or locally without Docker (recommended for active backend/frontend development).
+
+### Option A: With Docker (Recommended)
+
+**Prerequisites:**
 - Docker
 - Docker Compose
 
-## Getting Started
+1. Clone the repository.
+2. Run the application:
+   ```bash
+   docker-compose up --build
+   ```
+3. Access the application:
+   - Frontend: `http://localhost`
+   - Backend API: `http://localhost/api`
+   - API Docs: `http://localhost/api/docs/`
+   - Django Admin: `http://localhost/admin`
 
-1.  Clone the repository.
-2.  Run the application:
-    ```bash
-    docker-compose up --build
-    ```
-3.  Access the application:
-    - Frontend: http://localhost
-    - Backend API: http://localhost/api
-    - Django Admin: http://localhost/admin (You need to create a superuser first)
+4. To create a superuser inside the container:
+   ```bash
+   docker-compose exec backend python manage.py createsuperuser
+   ```
+
+### Option B: Without Docker (Local Development)
+
+**Prerequisites:**
+- Python 3.10+
+- Node.js 18+ (for frontend)
+- PostgreSQL (or SQLite will be used by default)
+
+#### Backend Setup (Django):
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Apply migrations and start the server:
+   ```bash
+   python manage.py migrate
+   python manage.py runserver
+   ```
+   The backend API will run on `http://127.0.0.1:8000/api/` and Docs at `http://127.0.0.1:8000/api/docs/`.
+
+#### Frontend Setup (Next.js):
+1. Open a new terminal and navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the Next.js development server:
+   ```bash
+   npm run dev
+   ```
+   The frontend will be available at `http://localhost:3000`.
 
 ## Development
 
