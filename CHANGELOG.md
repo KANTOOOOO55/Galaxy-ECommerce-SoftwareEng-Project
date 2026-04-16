@@ -1,3 +1,9 @@
+## v0.2.0 (2026-04-16)
+
+### Feat
+
+- initial implementation of the UI
+
 ## v0.1.0 (2026-04-15)
 
 ### Feat
