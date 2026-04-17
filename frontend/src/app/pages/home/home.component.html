@@ -1,0 +1,50 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-overlay-base"></div>
+    <div class="hero-bg-image"></div>
+    <div class="hero-gradient"></div>
+    
+    <div class="hero-content">
+      <h1 class="hero-title">Next Generation E-Commerce</h1>
+      <p class="hero-subtitle">
+        Discover premium products or launch your own digital storefront today with Galaxy Store.
+      </p>
+      <div class="hero-actions">
+        <a routerLink="/search" class="btn btn-primary btn-lg">Start Shopping</a>
+        <a routerLink="/register" class="btn btn-glass btn-lg">Become a Seller</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <section class="main-content">
+    <!-- Featured Categories -->
+    <div class="section-header center">
+      <h2 class="section-title">Featured Categories</h2>
+      <div class="category-grid">
+        <a *ngFor="let cat of categories" 
+           [routerLink]="['/category', cat.slug]" 
+           class="category-btn">
+          {{ cat.name }}
+        </a>
+      </div>
+    </div>
+
+    <!-- Trending Products -->
+    <div class="trending-section">
+      <div class="section-header flex">
+        <h2 class="section-title">Trending Products</h2>
+        <a routerLink="/search" class="view-all-link">View all curated items -></a>
+      </div>
+      
+      <div class="product-grid" *ngIf="featuredProducts.length > 0; else loading">
+        <app-product-card *ngFor="let product of featuredProducts" [product]="product"></app-product-card>
+      </div>
+      
+      <ng-template #loading>
+        <div class="loading-state">Loading products...</div>
+      </ng-template>
+    </div>
+  </section>
+</div>

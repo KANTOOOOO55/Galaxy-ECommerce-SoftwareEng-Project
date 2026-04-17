@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-image-container">
+    <div 
+      class="card-image"
+      [style.backgroundImage]="'url(' + primaryImageUrl + ')'">
+    </div>
+    <div class="category-badge">
+      {{ product.category.name }}
+    </div>
+  </div>
+  
+  <div class="card-content">
+    <h3 class="card-title" [title]="product.name">{{ product.name }}</h3>
+    
+    <div class="card-footer">
+      <span class="price">${{ formattedPrice }}</span>
+      <div *ngIf="product.average_rating > 0" class="rating">
+        <span class="star">★</span> {{ formattedRating }}
+      </div>
+    </div>
+    
+    <button class="add-btn">Add to Cart</button>
+  </div>
+</div>

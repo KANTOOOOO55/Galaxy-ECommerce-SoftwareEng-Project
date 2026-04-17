@@ -1,8 +1,9 @@
-# Node
+# Frontend
 node_modules/
+.angular/
+dist/
 npm-debug.log
 yarn-error.log
-.next/
 
 # Python
 __pycache__/

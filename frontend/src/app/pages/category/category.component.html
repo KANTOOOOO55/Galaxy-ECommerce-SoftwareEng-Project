@@ -1,0 +1,19 @@
+<div class="container overflow-hidden">
+  <div class="header">
+    <h1 class="title">{{ slug.replace('-', ' ') | titlecase }}</h1>
+    <p class="subtitle">Browse the best products in {{ slug.replace('-', ' ') }}.</p>
+  </div>
+
+  <div *ngIf="loading" class="state-container">
+    <p>Loading products...</p>
+  </div>
+
+  <div *ngIf="!loading && products.length > 0" class="product-grid">
+    <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+  </div>
+
+  <div *ngIf="!loading && products.length === 0" class="empty-state">
+    <div class="empty-icon">📦</div>
+    <p>We currently do not have any products in this category.</p>
+  </div>
+</div>

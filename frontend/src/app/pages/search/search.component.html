@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="header">
+    <h1 class="title">Search Results</h1>
+    <p class="subtitle">
+      {{ query ? 'Showing results for "' + query + '"' : 'Browse all products' }}
+    </p>
+  </div>
+
+  <div *ngIf="loading" class="state-container">
+    <p>Searching products...</p>
+  </div>
+
+  <div *ngIf="!loading && products.length > 0" class="product-grid">
+    <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+  </div>
+
+  <div *ngIf="!loading && products.length === 0" class="empty-state">
+    <div class="empty-icon">🔍</div>
+    <h2 class="empty-title">No Results Found</h2>
+    <p class="empty-text">We couldn't find anything matching "{{ query }}". Try checking your spelling or use more general terms.</p>
+  </div>
+</div>
