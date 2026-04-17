@@ -1,3 +1,9 @@
+## v0.4.0 (2026-04-17)
+
+### Feat
+
+- enhance django admin with full model registration and inlines
+
 ## v0.3.0 (2026-04-17)
 
 ### Feat
