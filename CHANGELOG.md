@@ -1,3 +1,9 @@
+## v0.7.1 (2026-04-18)
+
+### Refactor
+
+- migrate frontend from Next.js to Angular and add registration duplicate validation tests
+
 ## v0.7.0 (2026-04-18)
 
 ### Feat
