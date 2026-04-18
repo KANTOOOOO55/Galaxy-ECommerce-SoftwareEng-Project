@@ -1,3 +1,9 @@
+## v0.7.0 (2026-04-18)
+
+### Feat
+
+- finalized features for sprint 1
+
 ## v0.6.1 (2026-04-18)
 
 ### Fix
