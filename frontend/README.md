@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# E-Commerce Frontend (Angular)
 
-## Getting Started
+This is the storefront and administration frontend for the E-Commerce platform, built with [Angular](https://angular.io/).
 
-First, run the development server:
+## Development Server
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Run `npm start` for a dev server. Navigate to `http://localhost:3000/`. The app will automatically reload if you change any of the source files. 
+Note: The project is configured with a proxy (`proxy.conf.json`) to route API calls to the backend.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Code Scaffolding
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Build
 
-## Learn More
+Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-To learn more about Next.js, take a look at the following resources:
+## Running Unit Tests
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run `npm test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/app/pages/`: Main page components (Home, Login, Register, Dashboards)
+- `src/app/services/`: Services for API communication (Auth, Product)
+- `src/app/components/`: Reusable UI components
+- `proxy.conf.json`: Proxy configuration for development

@@ -1,11 +1,11 @@
 # E-Commerce Project
 
-Full-stack E-commerce application with Django (Backend), Next.js (Frontend), PostgreSQL (Database), and Nginx (Reverse Proxy).
+Full-stack E-commerce application with Django (Backend), Angular (Frontend), PostgreSQL (Database), and Nginx (Reverse Proxy).
 
 ## Project Structure
 
-- `backend/`: Django application
-- `frontend/`: Next.js application
+- `backend/`: Django application (REST API)
+- `frontend/`: Angular application (Storefront)
 - `nginx/`: Nginx configuration
 - `docker-compose.yml`: Docker orchestration
 
@@ -73,7 +73,7 @@ You can run the project either using Docker (recommended for a quick full-stack 
    ```
    The backend API will run on `http://127.0.0.1:8000/api/` and Docs at `http://127.0.0.1:8000/api/docs/`.
 
-#### Frontend Setup (Next.js):
+#### Frontend Setup (Angular):
 1. Open a new terminal and navigate to the frontend directory:
    ```bash
    cd frontend
@@ -82,11 +82,35 @@ You can run the project either using Docker (recommended for a quick full-stack 
    ```bash
    npm install
    ```
-3. Start the Next.js development server:
+3. Start the Angular development server:
    ```bash
-   npm run dev
+   npm start
    ```
-   The frontend will be available at `http://localhost:3000`.
+   The frontend will be available at `http://localhost:3000` (proxied to backend).
+
+### Option C: Using the Local Startup Script (Easiest)
+
+We provide a convenient bash script that automates the setup and starts both servers in a single command.
+
+1. Ensure you are in the project root.
+2. Run the script:
+   ```bash
+   sh run_local.sh
+   ```
+   *The script will check for virtual environments, install missing dependencies, run migrations, and start both servers in the background. Press Ctrl+C to stop them.*
+
+## Quality Assurance & Testing
+
+### Backend Testing
+The project uses `pytest` for backend testing. To run the tests:
+```bash
+cd backend
+.venv/bin/pytest
+```
+
+### Authentication & Security
+- **Registration Verification**: The registration feature has been verified to prevent duplicate emails and usernames using database-level unique constraints and API validation.
+- **Role-Based Access**: The application supports different roles (`CONSUMER`, `VENDOR`, `ADMIN`) with corresponding dashboard redirections.
 
 ## Development
 

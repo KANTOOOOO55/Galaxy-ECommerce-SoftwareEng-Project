@@ -45,3 +45,29 @@ class TestUserAPI:
         assert response.status_code == 200
         assert 'access' in response.data
         assert 'refresh' in response.data
+
+    def test_register_duplicate_email(self, api_client):
+        url = '/api/users/register/'
+        User.objects.create_user(username='original', email='duplicate@example.com', password='password123')
+        data = {
+            'email': 'duplicate@example.com',
+            'username': 'newuser',
+            'password': 'StrongPassword123!',
+            'user_type': 'CONSUMER'
+        }
+        response = api_client.post(url, data)
+        assert response.status_code == 400
+        assert 'email' in response.data
+
+    def test_register_duplicate_username(self, api_client):
+        url = '/api/users/register/'
+        User.objects.create_user(username='duplicate_user', email='original@example.com', password='password123')
+        data = {
+            'email': 'new@example.com',
+            'username': 'duplicate_user',
+            'password': 'StrongPassword123!',
+            'user_type': 'CONSUMER'
+        }
+        response = api_client.post(url, data)
+        assert response.status_code == 400
+        assert 'username' in response.data
