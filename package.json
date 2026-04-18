@@ -1,7 +1,7 @@
 {
   "name": "e-commerce",
   "version": "1.0.0",
-  "description": "Full-stack E-commerce application with Django (Backend), Next.js (Frontend), PostgreSQL (Database), and Nginx (Reverse Proxy).",
+  "description": "Full-stack E-commerce application with Django (Backend), Angular (Frontend), PostgreSQL (Database), and Nginx (Reverse Proxy).",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -86,18 +86,8 @@ You can run the project either using Docker (recommended for a quick full-stack 
    ```bash
    npm start
    ```
-   The frontend will be available at `http://localhost:3000` (proxied to backend).
-
-### Option C: Using the Local Startup Script (Easiest)
-
-We provide a convenient bash script that automates the setup and starts both servers in a single command.
-
-1. Ensure you are in the project root.
-2. Run the script:
-   ```bash
-   sh run_local.sh
-   ```
-   *The script will check for virtual environments, install missing dependencies, run migrations, and start both servers in the background. Press Ctrl+C to stop them.*
+    The frontend will be available at `http://localhost:3000`. 
+    *(Note: Although port 4200 is the Angular default, this project is configured to use port 3000 to maintain compatibility with existing Docker and Nginx configurations).*
 
 ## Quality Assurance & Testing
 
@@ -108,11 +98,33 @@ cd backend
 .venv/bin/pytest
 ```
 
+### Frontend Testing
+The project uses Karma/Jasmine for frontend unit testing. To run the tests:
+```bash
+cd frontend
+npm test
+```
+
 ### Authentication & Security
 - **Registration Verification**: The registration feature has been verified to prevent duplicate emails and usernames using database-level unique constraints and API validation.
 - **Role-Based Access**: The application supports different roles (`CONSUMER`, `VENDOR`, `ADMIN`) with corresponding dashboard redirections.
 
 ## Development
+
+### Code Scaffolding
+
+This project uses the Angular CLI for code generation. You can use the following commands inside the `frontend` directory:
+
+```bash
+# Generate a new component
+ng generate component components/my-component
+
+# Generate a new service
+ng generate service services/my-service
+
+# Generate a new module
+ng generate module pages/my-page
+```
 
 ### Commit Messages
 
