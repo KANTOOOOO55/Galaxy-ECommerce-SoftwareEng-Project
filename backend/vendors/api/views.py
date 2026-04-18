@@ -58,3 +58,22 @@ class VendorDashboardOrderViewSet(viewsets.ModelViewSet):
         if not hasattr(self.request.user, 'vendor_profile'):
             return OrderItem.objects.none()
         return OrderItem.objects.filter(vendor=self.request.user.vendor_profile).order_by('-id')
+
+class AdminVendorViewSet(viewsets.ModelViewSet):
+    serializer_class = VendorProfileSerializer
+    permission_classes = [permissions.IsAdminUser]
+    queryset = VendorProfile.objects.all().order_by('-id')
+    
+    @action(detail=True, methods=['post'])
+    def approve(self, request, pk=None):
+        vendor = self.get_object()
+        vendor.is_approved = True
+        vendor.save()
+        return Response({'status': 'vendor approved'})
+    
+    @action(detail=True, methods=['post'])
+    def reject(self, request, pk=None):
+        vendor = self.get_object()
+        vendor.is_approved = False
+        vendor.save()
+        return Response({'status': 'vendor rejected'})

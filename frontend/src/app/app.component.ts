@@ -1,41 +1,100 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   template: `
-    <div class="min-h-screen flex flex-col">
-      <!-- Navbar will go here once created -->
-      <nav class="bg-white border-b border-gray-200 py-4 px-6 flex justify-between items-center sticky top-0 z-50 shadow-sm">
-        <a routerLink="/" class="text-2xl font-bold tracking-tight text-primary">GALAXY STORE</a>
-        <div class="flex gap-6">
-          <a routerLink="/" class="font-medium hover:text-primary transition-colors">Home</a>
-          <a routerLink="/search" class="font-medium hover:text-primary transition-colors">Search</a>
+    <div class="layout-wrapper">
+      <nav class="navbar">
+        <div class="container nav-container flex items-center">
+          <a routerLink="/" class="brand">GALAXY STORE</a>
+          
+          <div class="search-bar">
+            <input type="text" [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" placeholder="Search products...">
+            <button class="search-btn" (click)="onSearch()">🔍</button>
+          </div>
+
+          <div class="nav-links">
+            <a routerLink="/" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+            
+            <ng-container *ngIf="!(authService.currentUser$ | async)">
+              <a routerLink="/login" class="nav-link" routerLinkActive="active">Login</a>
+              <a routerLink="/register" class="nav-link" routerLinkActive="active">Create Account</a>
+            </ng-container>
+
+            <ng-container *ngIf="authService.currentUser$ | async as user">
+              <span class="user-greeting">Hi, {{ user.email }}</span>
+              <a *ngIf="user.role === 'ADMIN'" routerLink="/admin" class="nav-link" routerLinkActive="active">Admin Dashboard</a>
+              <a *ngIf="user.role === 'VENDOR'" routerLink="/seller/dashboard" class="nav-link" routerLinkActive="active">Store Dashboard</a>
+              <a href="javascript:void(0)" class="nav-link" (click)="logout()">Logout</a>
+            </ng-container>
+          </div>
         </div>
       </nav>
 
-      <main class="flex-grow">
+      <main class="main-content-area">
         <router-outlet></router-outlet>
       </main>
 
-      <footer class="bg-slate-900 text-slate-400 py-12 px-6 mt-20 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-          <div class="text-white font-bold text-xl">Galaxy E-Commerce</div>
-          <div class="flex gap-8 text-sm">
-            <a href="#" class="hover:text-white transition-colors">About Us</a>
-            <a href="#" class="hover:text-white transition-colors">Contact</a>
-            <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+      <footer class="footer">
+        <div class="container footer-container">
+          <div class="footer-brand">Galaxy E-Commerce</div>
+          <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy Policy</a>
           </div>
-          <p class="text-xs">&copy; 2026 Galaxy Store. Built for the future.</p>
+          <p class="copyright">&copy; 2026 Galaxy Store. Built for the future.</p>
         </div>
       </footer>
     </div>
   `,
   styles: [`
-    :host {
-      display: block;
-    }
+    .layout-wrapper { min-height: 100vh; display: flex; flex-direction: column; }
+    .navbar { background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 50; padding: 1rem 0; transition: all 0.3s; }
+    .nav-container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .brand { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px; }
+    
+    .search-bar { display: flex; flex: 1; max-width: 400px; margin: 0 2rem; position: relative; }
+    .search-bar input { width: 100%; padding: 0.6rem 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: var(--radius-full); font-size: 0.9rem; font-family: var(--font-body); outline: none; transition: border 0.3s; }
+    .search-bar input:focus { border-color: var(--primary); }
+    .search-btn { position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted); }
+
+    .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+    .nav-link { font-weight: 500; color: var(--text-muted); font-size: 0.95rem; position: relative; }
+    .nav-link:hover, .nav-link.active { color: var(--primary); }
+    .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0%; height: 2px; background-color: var(--primary); transition: width 0.3s ease; border-radius: 2px; }
+    .nav-link.active::after { width: 100%; }
+    .user-greeting { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-right: 0.5rem; border-right: 1px solid #ccc; padding-right: 1rem; }
+    
+    .main-content-area { flex-grow: 1; }
+    .footer { background-color: var(--dark-bg); color: var(--text-muted); padding: 4rem 0 2rem; margin-top: 4rem; }
+    .footer-container { display: flex; flex-direction: column; gap: 2rem; align-items: center; }
+    @media (min-width: 768px) { .footer-container { flex-direction: row; justify-content: space-between; } }
+    .footer-brand { color: var(--dark-text); font-family: var(--font-heading); font-weight: 700; font-size: 1.25rem; }
+    .footer-links { display: flex; gap: 1.5rem; font-size: 0.875rem; }
+    .footer-links a:hover { color: var(--dark-text); }
+    .copyright { font-size: 0.75rem; width: 100%; text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    @media (min-width: 768px) { .copyright { text-align: right; margin-top: 0; padding-top: 0; border: none; width: auto; } }
   `]
 })
 export class AppComponent {
   title = 'frontend';
+  searchQuery = '';
+
+  constructor(public authService: AuthService, private router: Router) {}
+
+  onSearch() {
+    if (this.searchQuery.trim()) {
+      this.router.navigate(['/search'], { queryParams: { q: this.searchQuery } });
+      this.searchQuery = '';
+    }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/']);
+  }
 }
