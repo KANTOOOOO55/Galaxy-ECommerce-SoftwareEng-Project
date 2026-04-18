@@ -1,3 +1,9 @@
+## v0.6.1 (2026-04-18)
+
+### Fix
+
+- refactored code to angular
+
 ## v0.6.0 (2026-04-17)
 
 ### Feat
